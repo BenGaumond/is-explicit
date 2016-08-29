@@ -1,8 +1,8 @@
 {
   "name": "is-explicit",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Combines instance of operator and typeof operator in a way that works seamlessly with objects and literals.",
-  "main": "lib/is.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "node_modules/.bin/mocha --compilers js:babel-register"
   },

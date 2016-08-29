@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import is from '../src'
+import is from '../../is-explicit'
 
 /* globals describe it */
 
