@@ -11,10 +11,10 @@ Instead of using 'typeof' for literals and 'instance of' for objects, use 'is-ex
 
 Does a variable have a value?
 
-    is(undefined);                 //false
-    is(null);                      //false
-    is(NaN);                       //false
-    is(10);                        //true
+    is(undefined);         //false
+    is(null);              //false
+    is(NaN);               //false
+    is(10);                //true
 
 Is a variable a specific type?
 
@@ -43,6 +43,10 @@ Is a variable a specific type?
     is(Array, Object);      //true
     is(Array, Function);    //true
     is(Array, Array);       //false
+
+    is(Symbol(), Symbol);        //true
+    is(Symbol.iterator, Symbol); //true
+    is(Symbol(), Object);        //false
 
 Is a variable a custom type?
 

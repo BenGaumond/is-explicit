@@ -29,6 +29,9 @@ export default function is(value, ...types)
     else if (value_type === 'number' && type === Number && !Number.isNaN(value))
       return true
 
+    else if (value_type === 'symbol' && type === Symbol)
+      return true
+
     else if (value_type === 'function' && type === Function)
       return true
 

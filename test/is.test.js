@@ -54,6 +54,11 @@ describe('is()', ()=> {
     it('is(Array, Object)              == true', () => expect(is(Array, Object)).to.equal(true))
     it('is(Array, Function)            == true', () => expect(is(Array, Function)).to.equal(true))
     it('is(Array, Array)               == false',() => expect(is(Array, Array)).to.equal(false))
+    it('is(new Date(), Date)           == true', () => expect(is(new Date(), Date)).to.equal(true))
+    it('is(new Date(), Object)         == true', () => expect(is(new Date(), Object)).to.equal(true))
+    it('is(Symbol(), Symbol)           == true', () => expect(is(Symbol(), Symbol)).to.equal(true))
+    it('is(Symbol.iterator, Symbol)    == true', () => expect(is(Symbol.iterator, Symbol)).to.equal(true))
+    it('is(Symbol(), Object)           == false',() => expect(is(Symbol(), Object)).to.equal(false))
 
   })
 
