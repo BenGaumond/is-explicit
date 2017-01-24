@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BenGaumond/is-explicit"
+    "url": "git+https://github.com/BenZed/is-explicit"
   },
   "keywords": [
     "is",
@@ -17,9 +17,9 @@
   "author": "Ben Gaumond",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/BenGaumond/is-explicit/issues"
+    "url": "https://github.com/BenZed/is-explicit/issues"
   },
-  "homepage": "https://github.com/BenGaumond/is-explicit#readme",
+  "homepage": "https://github.com/BenZed/is-explicit#readme",
   "devDependencies": {
     "babel-core": "^6.14.0",
     "babel-preset-es2015": "^6.14.0",
