@@ -1,8 +1,6 @@
-.languagebabel
 .babelrc
 .eslintrc.json
 .eslintignore
 test
-lib-maps
 src
 node_modules

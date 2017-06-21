@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import is from '../../is-explicit'
+import is from '../src'
 
 /* globals describe it */
 
@@ -76,6 +76,78 @@ describe('is()', ()=> {
 
     it('is("str", Number, Boolean, String) == true', ()=> expect(is('str', Number, Boolean, String)).to.equal(true))
     it('is({}, Number, Boolean, String)    == false', ()=> expect(is({}, Number, Boolean, String)).to.equal(false))
+
+  })
+
+})
+
+describe('is.arrayOf()', () => {
+
+  describe('determine if value is array of types', () => {
+
+    it('is.arrayOf([\'str\'], String) == true',
+      ()=> expect(is.arrayOf(['str'], String)).to.equal(true)
+    )
+
+    it('is.arrayOf([0,false,new Date(), \'str\'], String) == false',
+      ()=> expect(is.arrayOf([0,false,new Date(), 'str'], String)).to.equal(false)
+    )
+
+    it('is.arrayOf([0,\'str\',10,\'cake\'], String, Number) == true',
+      ()=> expect(is.arrayOf([0,'str',10,'cake'], String, Number)).to.equal(true)
+    )
+
+  })
+
+})
+
+describe('is.objectOf()', () => {
+
+  describe('determine if value is array of types', () => {
+
+    it('is.objectOf([0,\'string\'], String)               == false',
+      ()=> expect(is.objectOf([0,'string'], String)).to.equal(false)
+    )
+
+    it('is.objectOf({}, String)                         == false',
+      ()=> expect(is.objectOf([0,'string'], String)).to.equal(false)
+    )
+
+    it('is.objectOf({foo: \'1\', bar: \'2\'}, String)       == true',
+      ()=> expect(is.objectOf({foo: '1', bar: '2'}, String)).to.equal(true)
+    )
+
+    it('is.objectOf({foo: \'1\', bar: 2}, String, Number) == true',
+      ()=> expect(is.objectOf({foo: '1', bar: 2}, String, Number)).to.equal(true)
+    )
+
+  })
+
+})
+
+describe('is.plainObject()', () => {
+
+  describe('determine if a value is a plain object', () => {
+
+    it('is.plainObject([\'str\'])                 == false',
+      ()=> expect(is.plainObject(['str'])).to.equal(false)
+    )
+
+    it('is.plainObject(new Date())              == false',
+      ()=> expect(is.plainObject(new Date())).to.equal(false)
+    )
+
+    it('is.plainObject({})                      == true',
+      ()=> expect(is.plainObject({})).to.equal(true)
+    )
+
+    it('is.plainObject(new Object())            == true',
+      ()=> expect(is.plainObject(new Object())).to.equal(true)
+    )
+
+    it('is.plainObject(new function FooBar(){}) == false',
+      ()=> expect(is.plainObject(new function FooBar(){})).to.equal(false)
+    )
 
   })
 
