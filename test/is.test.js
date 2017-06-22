@@ -83,7 +83,15 @@ describe('is()', ()=> {
 
 describe('is.arrayOf()', () => {
 
+  it('requires at least one type', () => {
+    expect(() => is.arrayOf([])).to.throw('is.arrayOf requires at least one type.')
+  })
+
   describe('determine if value is array of types', () => {
+
+    it('is.arrayOf([], String) == false',
+      ()=> expect(is.arrayOf([], String)).to.equal(false)
+    )
 
     it('is.arrayOf([\'str\'], String) == true',
       ()=> expect(is.arrayOf(['str'], String)).to.equal(true)
@@ -103,14 +111,18 @@ describe('is.arrayOf()', () => {
 
 describe('is.objectOf()', () => {
 
-  describe('determine if value is array of types', () => {
+  it('requires at least one type', () => {
+    expect(() => is.objectOf({})).to.throw('is.objectOf requires at least one type.')
+  })
+
+  describe('determine if value is object of types', () => {
 
     it('is.objectOf([0,\'string\'], String)               == false',
       ()=> expect(is.objectOf([0,'string'], String)).to.equal(false)
     )
 
     it('is.objectOf({}, String)                         == false',
-      ()=> expect(is.objectOf([0,'string'], String)).to.equal(false)
+      ()=> expect(is.objectOf({}, String)).to.equal(false)
     )
 
     it('is.objectOf({foo: \'1\', bar: \'2\'}, String)       == true',
