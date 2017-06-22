@@ -1,11 +1,11 @@
 {
   "name": "is-explicit",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Combines instance of operator and typeof operator in a way that works seamlessly with objects and literals.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha --compilers js:babel-register",
-    "test:watch": "mocha --require babel-register --watch --require babel-polyfill 'test/**/*test.js'",
+    "test": "node_modules/.bin/mocha --require babel-register --require babel-polyfill 'test/*test.js'",
+    "test:watch": "node_modules/.bin/mocha --require babel-register --watch --require babel-polyfill 'test/*test.js'",
     "build": "rm -rf lib; mkdir lib; node_modules/.bin/babel src --out-dir lib --plugins transform-runtime",
     "build:watch": "npm run build -- --watch",
     "prepublish": "npm run test && npm run build"
@@ -30,6 +30,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.5.2",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",

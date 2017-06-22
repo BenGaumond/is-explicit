@@ -1,3 +1,12 @@
+
+//This is a pain in the ass, but without it the babel transpile breaks Symbol
+//checking, because Symbol !== require('babel-runtime/core-js/symbol')
+
+const $Symbol =
+    typeof window === 'object' ? window.Symbol //eslint-disable-line no-undef
+  : typeof global === 'object' ? global.Symbol
+  : Symbol
+
 export default function is(value, ...types)
 {
   //Validate value argument
@@ -29,7 +38,7 @@ export default function is(value, ...types)
     else if (value_type === 'number' && type === Number && !Number.isNaN(value))
       return true
 
-    else if (value_type === 'symbol' && type === Symbol)
+    else if (value_type === 'symbol' && type === $Symbol)
       return true
 
     else if (value_type === 'function' && type === Function)
