@@ -161,6 +161,10 @@ describe('is.plainObject()', () => {
       ()=> expect(is.plainObject(new function FooBar(){})).to.equal(false)
     )
 
+    it('is.plainObject(Object.create(null))     == true',
+      ()=> expect(is.plainObject(Object.create(null))).to.equal(true)
+    )
+
   })
 
 })

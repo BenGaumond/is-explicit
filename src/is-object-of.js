@@ -1,6 +1,6 @@
 import is from './is'
 
-export default function isObjectOf(object, ...types) {
+export default function isObjectOf (object, ...types) {
 
   if (types.length === 0)
     throw new Error('is.objectOf requires at least one type.')

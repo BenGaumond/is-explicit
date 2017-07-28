@@ -1,6 +1,6 @@
 import is from './is'
 
-export default function isArrayOf(array, ...types) {
+export default function isArrayOf (array, ...types) {
 
   if (types.length === 0)
     throw new Error('is.arrayOf requires at least one type.')

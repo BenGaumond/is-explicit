@@ -1,7 +1,14 @@
 import is from './is'
 
-export default function isPlainObject(object) {
+export default function isPlainObject (object) {
 
-  return is(object, Object) && object.constructor === Object
+  if (typeof object !== 'object' || object === null)
+    return false
 
+  if (is(Object.getPrototypeOf, Function)) {
+    const proto = Object.getPrototypeOf(object)
+    return proto === Object.prototype || proto === null
+  }
+
+  return Object.prototype.toString.call(object) === '[object Object]'
 }
