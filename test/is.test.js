@@ -3,22 +3,24 @@ import is from '../lib'
 
 /* globals describe it */
 
-describe('is()', ()=> {
+/* eslint-disable comma-spacing, no-new-wrappers, space-before-function-paren, space-before-blocks, new-parens, no-new-object */
+
+describe('is()', () => {
 
   describe('arguments', () => {
 
     const ib = (...args) => is.bind(null, ...args)
 
-    it('must be called with at least one argument', ()=> {
+    it('must be called with at least one argument', () => {
       expect(ib()).to.throw('is expects at least one value and optionally a variable number of type arguments')
     })
 
-    it('requires type arguments, if supplied, to be Functions', ()=> {
-      [Array, Function, Object, String, Boolean, Number, function(){}].forEach( func => {
+    it('requires type arguments, if supplied, to be Functions', () => {
+      [Array, Function, Object, String, Boolean, Number, function () {}].forEach(func => {
         expect(ib(null, func)).to.not.throw(Error)
       });
 
-      [new Array(), {foo:'bar'}, 'oh hai', true, -5].forEach( value => {
+      [[], {foo: 'bar'}, 'oh hai', true, -5].forEach(value => {
         expect(ib(null, value)).to.throw(Error)
       })
     })
@@ -56,9 +58,9 @@ describe('is()', ()=> {
     it('is(Array, Array)               == false',() => expect(is(Array, Array)).to.equal(false))
     it('is(new Date(), Date)           == true', () => expect(is(new Date(), Date)).to.equal(true))
     it('is(new Date(), Object)         == true', () => expect(is(new Date(), Object)).to.equal(true))
-    it('is(Symbol(), Symbol)           == true', () => expect(is(Symbol(), Symbol)).to.equal(true))
+    it('is(Symbol(), Symbol)           == true', () => expect(is(Symbol('1'), Symbol)).to.equal(true))
     it('is(Symbol.iterator, Symbol)    == true', () => expect(is(Symbol.iterator, Symbol)).to.equal(true))
-    it('is(Symbol(), Object)           == false',() => expect(is(Symbol(), Object)).to.equal(false))
+    it('is(Symbol(), Object)           == false',() => expect(is(Symbol('2'), Object)).to.equal(false))
 
   })
 
@@ -74,8 +76,8 @@ describe('is()', ()=> {
 
   describe('determine if first argument is one of multiple types', () => {
 
-    it('is("str", Number, Boolean, String) == true', ()=> expect(is('str', Number, Boolean, String)).to.equal(true))
-    it('is({}, Number, Boolean, String)    == false', ()=> expect(is({}, Number, Boolean, String)).to.equal(false))
+    it('is("str", Number, Boolean, String) == true', () => expect(is('str', Number, Boolean, String)).to.equal(true))
+    it('is({}, Number, Boolean, String)    == false', () => expect(is({}, Number, Boolean, String)).to.equal(false))
 
   })
 
@@ -90,19 +92,19 @@ describe('is.arrayOf()', () => {
   describe('determine if value is array of types', () => {
 
     it('is.arrayOf([], String) == false',
-      ()=> expect(is.arrayOf([], String)).to.equal(false)
+      () => expect(is.arrayOf([], String)).to.equal(false)
     )
 
     it('is.arrayOf([\'str\'], String) == true',
-      ()=> expect(is.arrayOf(['str'], String)).to.equal(true)
+      () => expect(is.arrayOf(['str'], String)).to.equal(true)
     )
 
     it('is.arrayOf([0,false,new Date(), \'str\'], String) == false',
-      ()=> expect(is.arrayOf([0,false,new Date(), 'str'], String)).to.equal(false)
+      () => expect(is.arrayOf([0,false,new Date(), 'str'], String)).to.equal(false)
     )
 
     it('is.arrayOf([0,\'str\',10,\'cake\'], String, Number) == true',
-      ()=> expect(is.arrayOf([0,'str',10,'cake'], String, Number)).to.equal(true)
+      () => expect(is.arrayOf([0,'str',10,'cake'], String, Number)).to.equal(true)
     )
 
   })
@@ -118,19 +120,19 @@ describe('is.objectOf()', () => {
   describe('determine if value is object of types', () => {
 
     it('is.objectOf([0,\'string\'], String)               == false',
-      ()=> expect(is.objectOf([0,'string'], String)).to.equal(false)
+      () => expect(is.objectOf([0,'string'], String)).to.equal(false)
     )
 
     it('is.objectOf({}, String)                         == false',
-      ()=> expect(is.objectOf({}, String)).to.equal(false)
+      () => expect(is.objectOf({}, String)).to.equal(false)
     )
 
     it('is.objectOf({foo: \'1\', bar: \'2\'}, String)       == true',
-      ()=> expect(is.objectOf({foo: '1', bar: '2'}, String)).to.equal(true)
+      () => expect(is.objectOf({foo: '1', bar: '2'}, String)).to.equal(true)
     )
 
     it('is.objectOf({foo: \'1\', bar: 2}, String, Number) == true',
-      ()=> expect(is.objectOf({foo: '1', bar: 2}, String, Number)).to.equal(true)
+      () => expect(is.objectOf({foo: '1', bar: 2}, String, Number)).to.equal(true)
     )
 
   })
@@ -142,27 +144,27 @@ describe('is.plainObject()', () => {
   describe('determine if a value is a plain object', () => {
 
     it('is.plainObject([\'str\'])                 == false',
-      ()=> expect(is.plainObject(['str'])).to.equal(false)
+      () => expect(is.plainObject(['str'])).to.equal(false)
     )
 
     it('is.plainObject(new Date())              == false',
-      ()=> expect(is.plainObject(new Date())).to.equal(false)
+      () => expect(is.plainObject(new Date())).to.equal(false)
     )
 
     it('is.plainObject({})                      == true',
-      ()=> expect(is.plainObject({})).to.equal(true)
+      () => expect(is.plainObject({})).to.equal(true)
     )
 
     it('is.plainObject(new Object())            == true',
-      ()=> expect(is.plainObject(new Object())).to.equal(true)
+      () => expect(is.plainObject(new Object())).to.equal(true)
     )
 
     it('is.plainObject(new function FooBar(){}) == false',
-      ()=> expect(is.plainObject(new function FooBar(){})).to.equal(false)
+      () => expect(is.plainObject(new function FooBar(){})).to.equal(false)
     )
 
     it('is.plainObject(Object.create(null))     == true',
-      ()=> expect(is.plainObject(Object.create(null))).to.equal(true)
+      () => expect(is.plainObject(Object.create(null))).to.equal(true)
     )
 
   })
