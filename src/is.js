@@ -10,18 +10,18 @@ const $Symbol =
 
 /* eslint-enable */
 
-export default function is (value, ...types) {
+export default function is (...args) {
 
   // Validate value argument
-  if (arguments.length === 0)
+  if (args.length === 0)
     throw new Error('is expects at least one value and optionally a variable number of type arguments')
 
+  const [value, ...types] = args
+
   // Validate type arguments
-  for (let i = 0; i < types.length; i++) {
-    const type = types[i]
+  for (const type of types)
     if (typeof type !== 'function')
       throw new Error('types, if supplied, are expected to be of type \'function\'')
-  }
 
   // Type not supplied
   if (types.length === 0)
@@ -29,8 +29,7 @@ export default function is (value, ...types) {
 
   // Test types
   const valueType = typeof value
-  for (let i = 0; i < types.length; i++) {
-    const type = types[i]
+  for (const type of types)
 
     if (valueType === 'string' && type === String)
       return true
@@ -49,7 +48,6 @@ export default function is (value, ...types) {
 
     else if (value instanceof type)
       return true
-  }
 
   // All failed
   return false

@@ -9,19 +9,19 @@ describe('is()', () => {
 
   describe('arguments', () => {
 
-    const ib = (...args) => is.bind(null, ...args)
+    const isNull = (...args) => is(null, ...args)
 
     it('must be called with at least one argument', () => {
-      expect(ib()).to.throw('is expects at least one value and optionally a variable number of type arguments')
+      expect(is).to.throw('is expects at least one value and optionally a variable number of type arguments')
     })
 
     it('requires type arguments, if supplied, to be Functions', () => {
       [Array, Function, Object, String, Boolean, Number, function () {}].forEach(func => {
-        expect(ib(null, func)).to.not.throw(Error)
+        expect(() => isNull(func)).to.not.throw(Error)
       });
 
       [[], {foo: 'bar'}, 'oh hai', true, -5].forEach(value => {
-        expect(ib(null, value)).to.throw(Error)
+        expect(() => isNull(value)).to.throw(Error)
       })
     })
 

@@ -104,3 +104,34 @@ function FooBar() { }
 
 is.plainObject(new FooBar)           // == false
 ```
+
+# bind operator `::`
+
+I'm a big fan of the bind operator. Because of the nature of the ``is()`` function, it can't be written to be optionally bindable:
+```js
+import is from 'is-explicit'
+
+is(undefined, String) // false
+undefined::is(String) // will be true, when it should be false
+```
+
+However, it _can_ be written to be *explicitly* bindable:
+```js
+import is from 'is-explicit/this'
+
+undefined::is(String) // false
+
+```
+So, if you're calling the ``is()`` method from _'is-explicit/this'_, you MUST use the ``::`` operator or ``.call()`` method for it to work properly.
+
+also applies to ``is.plainObject``, ``is.arrayOf`` and ``is.objectOf``:
+
+```js
+
+import is from 'is-explicit/this'
+
+{}::is.plainObject() // true
+['str']::is.arrayOf(String) // true
+{ meaningOfLife: 42}::is.objectOf(Number) // true
+
+```
