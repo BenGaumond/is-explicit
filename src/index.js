@@ -10,17 +10,17 @@ import isSubclassOf from './is-subclass-of'
 // Data
 /******************************************************************************/
 
-const PRIMITIVES = [Boolean, Number, String]
+const PRIMITIVES = [ Boolean, Number, String ]
 
 /******************************************************************************/
 // Extends
 /******************************************************************************/
 
-is.plainObject = isPlainObject
+is.defined = isDefined
 is.arrayOf = isArrayOf
 is.objectOf = isObjectOf
+is.plainObject = isPlainObject
 is.instanceable = isInstanceable
-is.defined = isDefined
 is.subclassOf = isSubclassOf
 
 is.string = String::is
