@@ -1,54 +1,73 @@
+import isInstanceable from './is-instanceable'
 
 // This is a pain in the ass, but without it the babel transpile breaks Symbol
 // checking, because Symbol !== require('babel-runtime/core-js/symbol')
 
-/* eslint-disable no-undef, indent */
+/******************************************************************************/
+// Data
+/******************************************************************************/
+
 const $Symbol =
-    typeof window === 'object' ? window.Symbol
-  : typeof global === 'object' ? global.Symbol
-  : Symbol
+    typeof window === 'object'
+      ? window.Symbol
+      : typeof global === 'object'
+        ? global.Symbol
+        : Symbol
 
-/* eslint-enable */
+/******************************************************************************/
+// Helper
+/******************************************************************************/
 
-export default function is (...args) {
+const TESTS = {
+  string:    type => type === String,
+  boolean:   type => type === Boolean,
+  number:   (type, value) => type === Number && !Number.isNaN(value),
+  symbol:    type => type === $Symbol,
+  function: (type, value) => value instanceof type,
+  object:   (type, value) => value !== null && value instanceof type,
+  undefined: type => false
+}
 
-  // Validate value argument
-  if (args.length === 0)
-    throw new Error('is expects at least one value and optionally a variable number of type arguments')
+function typeIsValid (type, isArray = Array.isArray(type)) {
+  return isArray
+    ? type.length > 0 && type.every(isInstanceable)
+    : isInstanceable(type)
+}
 
-  const [value, ...types] = args
+/******************************************************************************/
+// Main
+/******************************************************************************/
+
+function is (value, type) {
+
+  type = this || type
+
+  const typesAsArray = type instanceof Array
 
   // Validate type arguments
-  for (const type of types)
-    if (typeof type !== 'function')
-      throw new Error('types, if supplied, are expected to be of type \'function\'')
-
-  // Type not supplied
-  if (types.length === 0)
-    return value !== undefined && value !== null && !Number.isNaN(value)
+  if (!typeIsValid(type, typesAsArray))
+    throw new Error(`${typesAsArray ? 'types' : 'type'} ` +
+    `${typesAsArray ? 'are' : 'is'} expected to be ` +
+    `${typesAsArray ? 'an array of' : 'a'} prototypal ` +
+    `${typesAsArray ? 'functions' : 'function'}`)
 
   // Test types
-  const valueType = typeof value
-  for (const type of types)
+  const test = TESTS[typeof value]
+  if (!typesAsArray)
+    return test(type, value)
 
-    if (valueType === 'string' && type === String)
+  for (const t of type)
+    if (test(t, value))
       return true
 
-    else if (valueType === 'boolean' && type === Boolean)
-      return true
-
-    else if (valueType === 'number' && type === Number && !Number.isNaN(value))
-      return true
-
-    else if (valueType === 'symbol' && type === $Symbol)
-      return true
-
-    else if (valueType === 'function' && type === Function)
-      return true
-
-    else if (value instanceof type)
-      return true
-
-  // All failed
   return false
+
 }
+
+/******************************************************************************/
+// Exports
+/******************************************************************************/
+
+export default is
+
+export { typeIsValid }

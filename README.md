@@ -5,6 +5,11 @@
 - You don't want to have to differentiate between ```typeof``` and ```instanceof```
 - You keep a cool head and bring justice to chaos.
 
+# 2.0
+
+Breaking changes from the 1.x release, but the resulting
+changes make ```is-explicit``` faster and more composable.
+
 # Usage
 
 ``npm install is-explicit``
@@ -14,10 +19,10 @@ import is from 'is-explicit'
 
 ## Does a variable have a value?
 ```js
-is(undefined)         //false
-is(null)              //false
-is(NaN)               //false
-is(10)                //true
+is.defined(undefined)         //false
+is.defined(null)              //false
+is.defined(NaN)               //false
+is.defined(10)                //true
 ```
 
 ## Is a variable a specific type?
@@ -68,10 +73,10 @@ is(new bar(), foo) // false
 ## Is a variable one of multiple types?
 
 ```js
-is('str', Number, Boolean, String) // true
+is('str', [Number, Boolean, String]) // true
 ```
 
-## If types are supplied, they must be Functions:
+## Types are expected to be functions:
 ```js
 is('str', 'otherstring') //throws Error
 ```
@@ -80,7 +85,7 @@ is('str', 'otherstring') //throws Error
 ```js
 is.arrayOf(['str'], String)                     // == true
 is.arrayOf([0,false,new Date(), 'str'], String) // == false
-is.arrayOf([0,'str',10,'cake'], String, Number) // == true,
+is.arrayOf([0,'str',10,'cake'], [String, Number]) // == true,
 
 ```
 
@@ -89,7 +94,7 @@ is.arrayOf([0,'str',10,'cake'], String, Number) // == true,
 is.objectOf([0, 'str'], String)                 // == false
 is.objectOf({}, String)                         // == false
 is.objectOf({foo: '1', bar: '2'}, String)       // == true
-is.objectOf({foo: '1', bar: 2}, String, Number) // == true
+is.objectOf({foo: '1', bar: 2}, [String, Number]) // == true
 
 ```
 
@@ -105,33 +110,76 @@ function FooBar() { }
 is.plainObject(new FooBar)           // == false
 ```
 
-# bind operator `::`
+## Binding
 
-I'm a big fan of the bind operator. Because of the nature of the ``is()`` function, it can't be written to be optionally bindable:
+Binding is now binds it to a type:
+
+```js
+class Foo { }
+
+const isFoo = Foo::is
+
+isFoo(new Foo()) // true
+```
+
+Bind to multiple types:
+
+```js
+const isBoolOrFunc = [ Boolean, Function ]::is
+
+isBoolOrFunc(false) // true
+
+```
+
+Better composition:
+```js
+const mixed = [ 0, 'string', 1, true, 2, Symbol('bad') ]
+
+const numbers = mixed.filter(Number::is)
+```
+
+## Shortcuts
+
 ```js
 import is from 'is-explicit'
 
-is(undefined, String) // false
-undefined::is(String) // will be true, when it should be false
+const value = 'whatever'
+
+is.string(value)    // == String::is(value)
+is.number(value)    // == Number::is(value)
+is.bool(value)      // == Boolean::is(value)
+is.func(value)      // == Function::is(value)
+is.symbol(value)    // == Symbol::is(value)
+is.primitive(value) // == [ Boolean, Number, String ]::is(value)
+
+is.arrayOf.string(value)    // == String::is.arrayOf
+is.arrayOf.number (value)   // == Number::is.arrayOf
+is.arrayOf.bool(value)      // == Boolean::is.arrayOf
+is.arrayOf.symbol(value)    // == Symbol::is.arrayOf
+is.arrayOf.func(value)      // == Function::is.arrayOf
+is.arrayOf.primitive(value) // == [ Boolean, Number, String ]::is.arrayOf
+
+is.objectOf.string(value)    // == String::is.objectOf
+is.objectOf.number (value)   // == Number::is.objectOf
+is.objectOf.bool(value)      // == Boolean::is.objectOf
+is.objectOf.symbol(value)    // == Symbol::is.objectOf
+is.objectOf.func(value)      // == Function::is.objectOf
+is.objectOf.primitive(value) // == [ Boolean, Number, String ]::isArrayOf
+
+
 ```
 
-However, it _can_ be written to be *explicitly* bindable:
-```js
-import is from 'is-explicit/this'
-
-undefined::is(String) // false
-
-```
-So, if you're calling the ``is()`` method from _'is-explicit/this'_, you MUST use the ``::`` operator or ``.call()`` method for it to work properly.
-
-also applies to ``is.plainObject``, ``is.arrayOf`` and ``is.objectOf``:
+## Additional Helpers
 
 ```js
+import is from 'is-explicit'
 
-import is from 'is-explicit/this'
+is.defined() // returns true if input is not null, undefined or NaN
 
-{}::is.plainObject() // true
-['str']::is.arrayOf(String) // true
-{ meaningOfLife: 42}::is.objectOf(Number) // true
+is.arrayOf.plainObject() // returns true if input is an array of plain objects
+
+is.instanceable() // returns true if input is a function with a prototype (ie: arrow functions will return false)
+
+is.subclassOf() // returns true if input is a class that extends the provided type
 
 ```

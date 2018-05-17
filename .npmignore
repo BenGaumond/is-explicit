@@ -1,7 +1,4 @@
-.babelrc
-.eslintrc.json
-.eslintignore
-test
-src
-node_modules
-playground.js
+*
+!lib/**/*
+*.test.js
+*-old*

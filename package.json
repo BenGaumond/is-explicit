@@ -1,14 +1,15 @@
 {
   "name": "is-explicit",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "description": "Combines instance of operator and typeof operator in a way that works seamlessly with objects and literals.",
   "main": "lib",
   "scripts": {
-    "test": "node_modules/.bin/mocha --require babel-register --require babel-polyfill 'test/*test.js'",
-    "test:watch": "node_modules/.bin/mocha --require babel-register --watch --require babel-polyfill 'test/*test.js'",
+    "lint": "eslint src --fix",
+    "test": "mocha --opts .mocha.opts",
+    "test:dev": "npx watch 'npm run test' src",
     "build": "rm -rf lib; mkdir lib; node_modules/.bin/babel src --out-dir lib --plugins transform-runtime",
-    "build:watch": "npm run build -- --watch",
-    "prepublishOnly": "npm run test && npm run build"
+    "build:dev": "npm run build -- --watch",
+    "prepublishOnly": "npm run linkt && npm run test && npm run build"
   },
   "repository": {
     "type": "git",
@@ -28,20 +29,20 @@
   },
   "homepage": "https://github.com/BenZed/is-explicit#readme",
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.3",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.3",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.23.0",
-    "babel-preset-env": "^1.5.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
-    "babel-register": "^6.24.1",
-    "chai": "^4.0.2",
-    "eslint": "^4.1.1",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.6.0",
-    "eslint-plugin-node": "^5.1.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "mocha": "^3.4.2"
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "mocha": "^5.1.1"
   }
 }

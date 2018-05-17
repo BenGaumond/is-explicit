@@ -1,14 +1,30 @@
 import is from './is'
 
-export default function isPlainObject (object) {
+/******************************************************************************/
+// Data
+/******************************************************************************/
 
-  if (typeof object !== 'object' || object === null)
+const { toString } = Object.prototype
+
+/******************************************************************************/
+// Main
+/******************************************************************************/
+
+const isPlainObject = value => {
+
+  if (typeof value !== 'object' || value === null)
     return false
 
   if (is(Object.getPrototypeOf, Function)) {
-    const proto = Object.getPrototypeOf(object)
+    const proto = Object.getPrototypeOf(value)
     return proto === Object.prototype || proto === null
   }
 
-  return Object.prototype.toString.call(object) === '[object Object]'
+  return toString.call(value) === '[object Object]'
 }
+
+/******************************************************************************/
+// Exports
+/******************************************************************************/
+
+export default isPlainObject
