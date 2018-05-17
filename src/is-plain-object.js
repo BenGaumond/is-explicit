@@ -23,8 +23,16 @@ const isPlainObject = value => {
   return toString.call(value) === '[object Object]'
 }
 
+const isArrayOfPlainObject = array =>
+
+  is(array, Array) && array.length > 0 && array.every(isPlainObject)
+
 /******************************************************************************/
 // Exports
 /******************************************************************************/
 
 export default isPlainObject
+
+export {
+  isArrayOfPlainObject
+}

@@ -83,18 +83,18 @@ is('str', 'otherstring') //throws Error
 
 ## Is a value an Array of a specific type?
 ```js
-is.arrayOf(['str'], String)                     // == true
-is.arrayOf([0,false,new Date(), 'str'], String) // == false
+is.arrayOf(['str'], String)                       // == true
+is.arrayOf([0, false, new Date(), 'str'], String) // == false
 is.arrayOf([0,'str',10,'cake'], [String, Number]) // == true,
 
 ```
 
 ## Is a value an Object of a specific type?
 ```js
-is.objectOf([0, 'str'], String)                 // == false
-is.objectOf({}, String)                         // == false
-is.objectOf({foo: '1', bar: '2'}, String)       // == true
-is.objectOf({foo: '1', bar: 2}, [String, Number]) // == true
+is.objectOf([ 0, 'str' ], String)                     // == false
+is.objectOf({ }, String)                              // == false
+is.objectOf({ foo: '1', bar: '2' }, String)           // == true
+is.objectOf({ foo: '1', bar: 2 }, [ String, Number ]) // == true
 
 ```
 

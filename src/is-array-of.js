@@ -12,7 +12,7 @@ function isArrayOf (array, type) {
   if (!typeIsValid(type))
     throw new Error('is.arrayOf requires at least one type.')
 
-  if (!Array.isArray(array) || array.length === 0)
+  if (!is(array, Array) || array.length === 0)
     return false
 
   for (const value of array)

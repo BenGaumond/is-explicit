@@ -4,7 +4,8 @@
 /******************************************************************************/
 
 const isInstanceable = value =>
-  typeof value === 'function' && value.prototype != null
+  typeof value === 'function' &&
+    value.prototype != null
 
 /******************************************************************************/
 // Exports
