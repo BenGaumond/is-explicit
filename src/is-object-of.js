@@ -12,7 +12,7 @@ function isObjectOf (object, type) {
   if (!typeIsValid(type))
     throw new Error('is.objectOf requires at least one type.')
 
-  if (is(object, Array))
+  if (!is(object, Object))
     return false
 
   let atLeastOneKey = false

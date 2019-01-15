@@ -8,11 +8,11 @@ import isInstanceable from './is-instanceable'
 /******************************************************************************/
 
 const $Symbol =
-    typeof window === 'object'
-      ? window.Symbol
-      : typeof global === 'object'
-        ? global.Symbol
-        : Symbol
+  typeof window === 'object'
+    ? window.Symbol
+    : typeof global === 'object'
+      ? global.Symbol
+      : Symbol
 
 /******************************************************************************/
 // Helper
@@ -23,8 +23,14 @@ const TESTS = {
   boolean:   type => type === Boolean,
   number:   (type, value) => type === Number && !Number.isNaN(value),
   symbol:    type => type === $Symbol,
-  function: (type, value) => value instanceof type,
-  object:   (type, value) => value !== null && value instanceof type,
+  function: (type, value) => type === Function,
+
+  object:   (type, value) => type === Object
+    ? value !== null
+    : type === Array
+      ? Array.isArray(value)
+      : value instanceof type,
+
   undefined: type => false
 }
 
@@ -42,7 +48,7 @@ function is (value, type) {
 
   type = this || type
 
-  const typesAsArray = type instanceof Array
+  const typesAsArray = Array.isArray(type)
 
   // Validate type arguments
   if (!typeIsValid(type, typesAsArray))

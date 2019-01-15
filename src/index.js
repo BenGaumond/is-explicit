@@ -1,5 +1,5 @@
 import is from './is'
-import isPlainObject, { isArrayOfPlainObject } from './is-plain-object'
+import isPlainObject from './is-plain-object'
 import isArrayOf from './is-array-of'
 import isObjectOf from './is-object-of'
 import isInstanceable from './is-instanceable'
@@ -16,37 +16,89 @@ const PRIMITIVES = [ Boolean, Number, String ]
 // Extends
 /******************************************************************************/
 
-is.defined = isDefined
 is.arrayOf = isArrayOf
 is.objectOf = isObjectOf
-is.plainObject = isPlainObject
-is.instanceable = isInstanceable
 is.subclassOf = isSubclassOf
 
-is.string = String::is
-is.number = Number::is
-is.bool = Boolean::is
-is.object = Object::is
-is.func = Function::is
-is.symbol = Symbol::is
+is.string = value => typeof value === 'string'
+is.number = value => typeof value === 'number' && !Number.isNaN(value)
+is.bool = value => typeof value === 'boolean'
+is.object = value => value !== null && typeof value === 'object'
+is.func = value => typeof value === 'function'
+is.function = is.func
+is.symbol = value => typeof value === 'symbol'
+is.array = Array.isArray
+is.date = value => value instanceof Date
+is.promise = value => value instanceof Promise
 is.primitive = PRIMITIVES::is
+is.nan = Number.isNaN
+is.NaN = Number.isNaN
+is.plainObject = isPlainObject
+is.instanceable = isInstanceable
+is.defined = isDefined
+is.truthy = value => !!value
+is.falsy = value => !value
 
-is.arrayOf.string = String::isArrayOf
-is.arrayOf.number = Number::isArrayOf
-is.arrayOf.bool = Boolean::isArrayOf
-is.arrayOf.object = Object::isArrayOf
-is.arrayOf.func = Function::isArrayOf
-is.arrayOf.symbol = Symbol::isArrayOf
-is.arrayOf.primitive = PRIMITIVES::isArrayOf
-is.arrayOf.plainObject = isArrayOfPlainObject
+/******************************************************************************/
+// Temp
+/******************************************************************************/
 
-is.objectOf.string = String::isObjectOf
-is.objectOf.number = Number::isObjectOf
-is.objectOf.bool = Boolean::isObjectOf
-is.objectOf.object = Object::isObjectOf
-is.objectOf.func = Function::isObjectOf
-is.objectOf.symbol = Symbol::isObjectOf
-is.objectOf.primitive = PRIMITIVES::isObjectOf
+const isArrayAndPassesTest = (array, test) =>
+  is.array(array) &&
+  array.length > 0 &&
+  array.every(test)
+
+const isObjectAndPassesTest = (obj, test) => {
+  if (!is.object(obj))
+    return false
+
+  let atLeastOneKey = false
+  for (const key in obj)
+    if (!test(obj[key]))
+      return false
+    else
+      atLeastOneKey = true
+
+  return atLeastOneKey
+}
+
+const name = (object, name) => Object.defineProperty(object, 'name', { value: name })
+
+const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1)
+
+// Add arrayOf and objectOf to each shotcut test
+for (const shortcut of [
+  'string',
+  'number',
+  'bool',
+  'object',
+  'func',
+  'function',
+  'symbol',
+  'array',
+  'date',
+  'promise',
+  'primitive',
+  'nan',
+  'NaN',
+  'plainObject',
+  'instanceable',
+  'defined',
+  'truthy',
+  'falsy'
+]) {
+  const isShortcut = is[shortcut]
+
+  // add shortcuts
+  is.arrayOf[shortcut] = value => isArrayAndPassesTest(value, isShortcut)
+  is.objectOf[shortcut] = value => isObjectAndPassesTest(value, isShortcut)
+
+  // add names
+  name(is.arrayOf[shortcut], `isArrayOf${capitalize(shortcut)}`)
+  name(is.objectOf[shortcut], `isObjectOf${capitalize(shortcut)}`)
+  if (isShortcut && (!isShortcut.name || isShortcut.name.includes('bound')))
+    name(isShortcut, `is${capitalize(shortcut)}`)
+}
 
 /******************************************************************************/
 // Exports

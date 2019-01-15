@@ -36,11 +36,11 @@ describe('is()', () => {
     it('is(new String("str"), Object)  == true', () => expect(is(new String('str'), Object)).to.equal(true))
     it('is(/expr/, RegExp)             == true', () => expect(is(/expr/, RegExp)).to.equal(true))
     it('is(/expr/, Object)             == true', () => expect(is(/expr/, Object)).to.equal(true))
-    it('is(function(){}, Object)       == true', () => expect(is(function(){}, Object)).to.equal(true))
+    it('is(function(){}, Object)       == false', () => expect(is(function(){}, Object)).to.equal(false))
     it('is(function(){}, Function)     == true', () => expect(is(function(){}, Function)).to.equal(true))
     it('is(new function(){}, Object)   == true', () => expect(is(new function(){}, Object)).to.equal(true))
     it('is(new function(){}, Function) == false',() => expect(is(new function(){}, Function)).to.equal(false))
-    it('is(Array, Object)              == true', () => expect(is(Array, Object)).to.equal(true))
+    it('is(Array, Object)              == false', () => expect(is(Array, Object)).to.equal(false))
     it('is(Array, Function)            == true', () => expect(is(Array, Function)).to.equal(true))
     it('is(Array, Array)               == false',() => expect(is(Array, Array)).to.equal(false))
     it('is(new Date(), Date)           == true', () => expect(is(new Date(), Date)).to.equal(true))
@@ -50,6 +50,7 @@ describe('is()', () => {
     it('is(Symbol(), Object)           == false',() => expect(is(Symbol('2'), Object)).to.equal(false))
     it('is(undefined, Object)          == false',() => expect(is(undefined, Object)).to.equal(false))
     it('is(null, Object)               == false',() => expect(is(null, Object)).to.equal(false))
+    it('is(Object.create(null), Object)== true',() => expect(is(Object.create(null), Object)).to.equal(true))
 
   })
 

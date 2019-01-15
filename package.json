@@ -1,6 +1,6 @@
 {
   "name": "is-explicit",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Combines instance of operator and typeof operator in a way that works seamlessly with objects and literals.",
   "main": "lib",
   "scripts": {
