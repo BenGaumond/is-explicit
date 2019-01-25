@@ -4,17 +4,6 @@ import isInstanceable from './is-instanceable'
 // checking, because Symbol !== require('babel-runtime/core-js/symbol')
 
 /******************************************************************************/
-// Data
-/******************************************************************************/
-
-const $Symbol =
-  typeof window === 'object'
-    ? window.Symbol
-    : typeof global === 'object'
-      ? global.Symbol
-      : Symbol
-
-/******************************************************************************/
 // Helper
 /******************************************************************************/
 
@@ -22,7 +11,7 @@ const TESTS = {
   string:    type => type === String,
   boolean:   type => type === Boolean,
   number:   (type, value) => type === Number && !Number.isNaN(value),
-  symbol:    type => type === $Symbol,
+  symbol:    type => type === Symbol,
   function: (type, value) => type === Function,
 
   object:   (type, value) => type === Object

@@ -16,7 +16,7 @@ describe('is()', () => {
         expect(() => isNull(func)).to.not.throw(Error)
       });
 
-      [{foo: 'bar'}, 'oh hai', true, -5].forEach(value => {
+      [{ foo: 'bar' }, 'oh hai', true, -5].forEach(value => {
         expect(() => isNull(value)).to.throw('type is expected to be a prototypal function')
       })
     })

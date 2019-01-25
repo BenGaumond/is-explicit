@@ -21,11 +21,11 @@ describe('isObjectOf()', () => {
     )
 
     it('is.objectOf({foo: \'1\', bar: \'2\'}, String)       == true',
-      () => expect(isObjectOf({foo: '1', bar: '2'}, String)).to.equal(true)
+      () => expect(isObjectOf({ foo: '1', bar: '2' }, String)).to.equal(true)
     )
 
     it('is.objectOf({foo: \'1\', bar: 2}, [String, Number]) == true',
-      () => expect(isObjectOf({foo: '1', bar: 2}, [String, Number])).to.equal(true)
+      () => expect(isObjectOf({ foo: '1', bar: 2 }, [String, Number])).to.equal(true)
     )
 
   })
