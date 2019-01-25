@@ -9,7 +9,7 @@
     "test:dev": "npx watch 'npm run test' src",
     "babel": "rm -rf lib; mkdir lib; babel src --out-dir lib",
     "babel:dev": "npm run babel -- --watch",
-    "prepublishOnly": "npm run lint && npm run test && npm run build"
+    "prepublishOnly": "npm run lint && npm run test && npm run babel"
   },
   "repository": {
     "type": "git",
